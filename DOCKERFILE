@@ -74,7 +74,7 @@ RUN  pip3 install --no-cache-dir \
   
 # install custom version of rouge from repo (with msdl highlighting)
 RUN cd /opt \
-  && git clone https://faeb1ded719dce22b515dd399ab32839b6d1e185@github.com/engelben/rouge \
+  && git clone https://github.com/engelben/rouge.git \
   && bundle config --global silence_root_warning 1 \
   && cd rouge \
   && bundle install --path vendor \
