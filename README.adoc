@@ -1,0 +1,51 @@
+= Asciidoctor Ubuntu Docker Container
+A Docker image for using the Asciidoctor toolchain to process AsciiDoc content. Based on the official asciidoctor docker image (which uses Alpine Linux)
+:source-highlighter: coderay
+
+== The environment
+
+This Docker container provides:
+
+* Asciidoctor 2.0.10
+* Asciidoctor Diagram 2.0.0 with Graphviz integration (supports plantuml and graphiz diagrams)
+* Asciidoctor PDF 1.5.0.beta.7
+* Asciidoctor Mathematical
+* Source highlighting using Rouge 
+
+== How to use it
+
+Just run:
+
+[source,bash]
+----
+docker run -it -v <your directory>:/documents/ asciidoctor/docker-asciidoctor
+----
+
+It will be directly mapped with [path]_/documents_ of the container.
+
+Once started, you can use Asciidoctor commands to convert AsciiDoc files you created in the directory mentioned above. You can find several examples below.
+
+* To run Asciidoctor on a basic AsciiDoc file:
++
+[source,bash]
+----
+asciidoctor sample.adoc
+asciidoctor-pdf sample.adoc
+asciidoctor-epub3 sample.adoc
+----
+
+* To run AsciiDoc on an AsciiDoc file that contains diagrams:
++
+[source,bash]
+----
+asciidoctor -r asciidoctor-diagram sample-with-diagram.adoc
+asciidoctor-pdf -r asciidoctor-diagram sample-with-diagram.adoc
+asciidoctor-epub3 -r asciidoctor-diagram sample-with-diagram.adoc
+----
+
+* Batch mode. You can use it in a "batch" mode
++
+[source, bash]
+----
+docker run --rm -v $(pwd):/documents/ asciidoctor/docker-asciidoctor asciidoctor-pdf index.adoc
+----

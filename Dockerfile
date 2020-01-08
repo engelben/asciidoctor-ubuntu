@@ -100,4 +100,7 @@ RUN cd /opt \
   && npm i \
   && compass compile 
 
+WORKDIR /documents
+VOLUME /documents
+
 CMD ["/bin/bash"]
