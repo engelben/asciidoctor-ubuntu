@@ -3,13 +3,15 @@ FROM ubuntu:18.04
 LABEL MAINTAINERS="Ben Engel <benjamin.engel@ymail.com>"
 
 ARG asciidoctor_version=2.0.10
-ARG asciidoctor_pdf_version=1.5.0.beta.7
+ARG asciidoctor_pdf_version=1.5.0.rc.1
 ARG asciidoctor_diagram_version=2.0.0
+ARG asciidoctor_mathematical_version=0.3.1
 
 
 ENV ASCIIDOCTOR_VERSION=${asciidoctor_version} \
   ASCIIDOCTOR_PDF_VERSION=${asciidoctor_pdf_version} \
-  ASCIIDOCTOR_DIAGRAM_VERSION=${asciidoctor_diagram_version}
+  ASCIIDOCTOR_DIAGRAM_VERSION=${asciidoctor_diagram_version} \
+  ASCIIDOCTOR_MATHEMATICAL_VERSION=${asciidoctor_mathematical_version}
 
 RUN apt-get update && apt-get upgrade -y 
 
@@ -59,11 +61,11 @@ RUN gem install --no-document --pre \
     "asciidoctor:${ASCIIDOCTOR_VERSION}" \
     "asciidoctor-diagram:${ASCIIDOCTOR_DIAGRAM_VERSION}" \
     "asciidoctor-pdf:${ASCIIDOCTOR_PDF_VERSION}" \
+    "asciidoctor-mathematical:${ASCIIDOCTOR_MATHEMATICAL_VERSION}" \
     coderay \
     bundler \
-    rack \
-    asciidoctor-mathematical
-
+    rack
+    
 # Installing Python dependencies for additional
 # functionalities as diagrams or syntax highligthing
 RUN  pip3 install --no-cache-dir \
