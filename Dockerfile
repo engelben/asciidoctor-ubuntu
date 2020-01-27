@@ -99,8 +99,8 @@ RUN git clone https://github.com/engelben/asciidoctor-stylesheet-factory.git \
   && compass compile 
   
 # install revealjs
-RUN git clone -b 3.8.0 --depth 1 https://github.com/hakimel/reveal.js.git \
-  && cd reveal.js/3.8.0 \
+RUN git clone https://github.com/hakimel/reveal.js.git \
+  && cd reveal.js \
   && npm i
 
 RUN echo 'alias apres="bundle exec asciidoctor-revealjs -a revealjsdir=/opt/reveal.js"' >> ~/.bashrc
