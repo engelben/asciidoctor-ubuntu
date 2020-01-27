@@ -5,12 +5,14 @@ LABEL MAINTAINERS="Ben Engel <benjamin.engel@ymail.com>"
 ARG asciidoctor_version=2.0.10
 ARG asciidoctor_pdf_version=1.5.0.rc.1
 ARG asciidoctor_diagram_version=2.0.0
+ARG asciidoctor_revealjs_version=3.1.0
 ARG asciidoctor_mathematical_version=0.3.1
 
 
 ENV ASCIIDOCTOR_VERSION=${asciidoctor_version} \
   ASCIIDOCTOR_PDF_VERSION=${asciidoctor_pdf_version} \
   ASCIIDOCTOR_DIAGRAM_VERSION=${asciidoctor_diagram_version} \
+  ASCIIDOCTOR_REVEALJS_VERSION=${asciidoctor_revealjs_version} \
   ASCIIDOCTOR_MATHEMATICAL_VERSION=${asciidoctor_mathematical_version}
 
 RUN apt-get update && apt-get upgrade -y 
@@ -62,6 +64,7 @@ RUN gem install --no-document --pre \
     "asciidoctor-diagram:${ASCIIDOCTOR_DIAGRAM_VERSION}" \
     "asciidoctor-pdf:${ASCIIDOCTOR_PDF_VERSION}" \
     "asciidoctor-mathematical:${ASCIIDOCTOR_MATHEMATICAL_VERSION}" \
+    "asciidoctor-revealjs:${ASCIIDOCTOR_REVEALJS_VERSION}" \
     coderay \
     bundler \
     rack
@@ -101,6 +104,12 @@ RUN cd /opt \
   && bundle \
   && npm i \
   && compass compile 
+  
+# install revealjs
+RUN cd /opt \
+  && git clone -b 3.8.0 --depth 1 https://github.com/hakimel/reveal.js.git \
+  && cd reveal.js/3.8.0 \
+  && npm i
 
 WORKDIR /documents
 VOLUME /documents
