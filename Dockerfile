@@ -45,14 +45,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
           && rm -rf /var/lib/apt/lists/* \
           && rm -rf /tmp/*
 
- 
-# RUN add-apt-repository universe \
-#      && apt-get update \
-#      && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-#           texlive-latex-recommended \
-#           texlive-fonts-recommended \
-#           dblatex
-
 # install nodejs for compiling stylesheets
 RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -E \
   && apt-get -y install nodejs
@@ -76,10 +68,12 @@ RUN  pip3 install --no-cache-dir \
     'blockdiag[pdf]' \
     nwdiag \
     seqdiag
-  
+
+
+WORKDIR /opt
+
 # install custom version of rouge from repo (with msdl highlighting)
-RUN cd /opt \
-  && git clone https://github.com/engelben/rouge.git \
+RUN git clone https://github.com/engelben/rouge.git \
   && bundle config --global silence_root_warning 1 \
   && cd rouge \
   && bundle install --path vendor \
@@ -88,8 +82,8 @@ RUN cd /opt \
 
 
 # install plantuml
-RUN mkdir -p /opt/plantuml \
-  && cd /opt/plantuml \
+RUN mkdir -p plantuml \
+  && cd plantuml \
   && curl -JLO http://sourceforge.net/projects/plantuml/files/plantuml.jar/download \
   && touch /usr/local/bin/plantuml \
   && echo "#!/bin/sh" >> /usr/local/bin/plantuml \
@@ -98,18 +92,18 @@ RUN mkdir -p /opt/plantuml \
 
 
 # install asciidoctor stylesheet factory
-RUN cd /opt \
-  && git clone https://github.com/engelben/asciidoctor-stylesheet-factory.git \
+RUN git clone https://github.com/engelben/asciidoctor-stylesheet-factory.git \
   && cd asciidoctor-stylesheet-factory \
   && bundle \
   && npm i \
   && compass compile 
   
 # install revealjs
-RUN cd /opt \
-  && git clone -b 3.8.0 --depth 1 https://github.com/hakimel/reveal.js.git \
+RUN git clone -b 3.8.0 --depth 1 https://github.com/hakimel/reveal.js.git \
   && cd reveal.js/3.8.0 \
   && npm i
+
+RUN echo 'alias apres="bundle exec asciidoctor-revealjs -a revealjsdir=/opt/reveal.js"' >> ~/.bashrc
 
 WORKDIR /documents
 VOLUME /documents
