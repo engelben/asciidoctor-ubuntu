@@ -1,0 +1,30 @@
+#!/bin/bash
+
+word(){
+    local input = $1
+    local output = ${input%.*}.docx
+    asciidoctor --backend docbook --out-file - $input
+    pandoc --from docbook --to docx --output $output
+    echo "Done converting to word... Output is $output"
+}
+
+pdf(){
+    local input = $1
+    local output = ${input%.*}.pdf
+    asciidoctor-pdf -r asciidoctor-diagram -r asciidoctor-mathematical $input -o $output
+    echo "Done converting to pdf... Output is $output"
+}
+
+html(){
+    local input = $1
+    local output = ${input%.*}.html
+    asciidoctor -r asciidoctor-diagram $input -o $output
+    echo "Done converting to html... Output is $output"
+}
+
+reveal(){
+    local input = $1
+    local output = ${input%.*}.html
+    asciidoctor-revealjs -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0 $input -o $output
+    echo "Done converting to presentation... Output is $output"
+}

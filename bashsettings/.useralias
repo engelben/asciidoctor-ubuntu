@@ -1,0 +1,88 @@
+
+# ------------------
+# export LANG=de_DE.utf8
+
+alias ls='ls --color=auto'
+alias ll='ls -lhtr'            # long listing
+alias la='ls -A'             # show all files
+alias lt='ls -ltrh'          # sort by date
+alias dir='ls --format=vertical'
+alias rm='rm -i'
+alias cp='cp -i'
+alias rsync='rsync -r --chmod=+rwx --size-only --progress'
+alias grep='grep --color=always'
+alias video='convert   -delay 20   -loop 0   GIF_VIDEO/gifpicture_*.png   gifvideo.gif'
+
+winlin() {
+  if [ $# -eq 1 ] ; then
+    echo '$*' | sed -e 's/\\/\//g'
+  else
+    echo !ERROR!
+  fi    
+}
+
+fnd() {
+  if [ $# -eq 1 ] ; then
+    find -iname "*$1*"
+  elif [ $2 == "n" ] ; then 
+    find -iname "*$1*" | xargs -n 1 -i -r /usr/bin/nedit {} &
+  else
+    echo !ERROR!
+  fi    
+  } 
+    
+
+ne() {
+  if [ ! -z $1 ] ; then
+    /usr/bin/nedit $* &
+  else
+    /usr/bin/nedit &
+  fi
+}
+
+psgrep() {
+  if [ ! -z $1 ] ; then
+    echo "Grepping for processes matching $1..."
+    ps aux | grep $1 | grep -v grep
+  else
+    echo "!! Need name to grep for"
+  fi
+}
+
+gif() {
+  if [ ! -z $1 ] ; then
+    echo "
+Producing animation $1.gif..."
+    convert -delay 20 -loop 0 gifpicture*.png $1.gif
+  else
+    echo "!! Need name for animation"
+  fi
+}
+
+spacerem() {
+    for f in *\ *; do 
+        mv "$f" "${f// /_}"; done
+}
+
+word(){
+    local input = $1
+    local output = ${input%.*}.docx
+    echo "Converting $1 to word"
+    asciidoctor --backend docbook --out-file - $input
+    pandoc --from docbook --to docx --output $output
+    echo "Done converting... Output is $output"
+}
+
+pdf(){
+    local input = $1
+    local output = ${input%.*}.pdf
+    asciidoctor-pdf -r asciidoctor-diagram -r asciidoctor-mathematical $input -o $output
+    echo "Done converting... Output is $output"
+}
+
+html(){
+    local input = $1
+    local output = ${input%.*}.html
+    asciidoctor -r asciidoctor-diagram $input -o $output
+    echo "Done converting... Output is $output"
+}

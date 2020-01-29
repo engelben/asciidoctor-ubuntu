@@ -103,9 +103,15 @@ RUN git clone https://github.com/hakimel/reveal.js.git \
   && cd reveal.js \
   && npm i
 
-RUN echo 'alias apres="bundle exec asciidoctor-revealjs -a revealjsdir=/opt/reveal.js"' >> ~/.bashrc
+COPY bashsettings/.asciidoc_snippets /root/.asciidoc_snippets
+COPY bashsettings/.bashrc /root/.bashrc
+COPY bashsettings/.dir_colors /root/.dir_colors
+COPY bashsettings/.profile /root/.profile
+COPY bashsettings/.useralias /root/.useralias
+COPY bashsettings/.usersettings /root/.usersettings
+COPY bashsettings/.vimrc /root/.vimrc
 
 WORKDIR /documents
 VOLUME /documents
 
-CMD ["/bin/bash"]
+CMD ["/bin/bash", "-l"]
