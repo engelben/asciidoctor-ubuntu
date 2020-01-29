@@ -103,13 +103,16 @@ RUN git clone https://github.com/hakimel/reveal.js.git \
   && cd reveal.js \
   && npm i
 
-COPY bashsettings/.asciidoc_snippets /root/.asciidoc_snippets
-COPY bashsettings/.bashrc /root/.bashrc
-COPY bashsettings/.dir_colors /root/.dir_colors
-COPY bashsettings/.profile /root/.profile
-COPY bashsettings/.useralias /root/.useralias
-COPY bashsettings/.usersettings /root/.usersettings
-COPY bashsettings/.vimrc /root/.vimrc
+WORKDIR /root
+
+RUN git clone https://oauth2:c_a1ZcwxKG5T_QePunb9@gitlab.com/Nanuk/bashsettings.git \
+&& mv bashsettings/.asciidoc_snippets /root/.asciidoc_snippets \
+&& mv bashsettings/.dir_colors /root/.dir_colors \
+&& mv bashsettings/.profile /root/.profile \
+&& mv bashsettings/.useralias /root/.useralias \
+&& mv bashsettings/.usersettings /root/.usersettings \
+&& mv bashsettings/.vimrc /root/.vimrc \
+&& mv bashsettings/.bashrc /root/.bashrc
 
 WORKDIR /documents
 VOLUME /documents
