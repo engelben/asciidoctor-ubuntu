@@ -16,7 +16,13 @@ ENV ASCIIDOCTOR_VERSION=${asciidoctor_version} \
   ASCIIDOCTOR_MATHEMATICAL_VERSION=${asciidoctor_mathematical_version}
 
 RUN apt-get update && apt-get upgrade -y 
-
+ RUN apt-get update && \ 
+     apt-get install -yq --no-install-recommends \ 
+     libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \ 
+     libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \ 
+     libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \ 
+     libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \ 
+     libnss3 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
            software-properties-common \
            ruby \
@@ -41,6 +47,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
           libpango1.0-dev \
           fonts-lyx \
           gnupg \
+     libasound2 libatk1.0-0 libc6 libcups2 libdbus-1-3 \ 
+     libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libglib2.0-0 libgtk-3-0 libnspr4 \ 
+     libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \ 
+     libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \ 
+     libnss3 \
           && apt-get clean \
           && rm -rf /var/lib/apt/lists/* \
           && rm -rf /tmp/*
@@ -99,7 +110,7 @@ RUN git clone https://github.com/engelben/asciidoctor-stylesheet-factory.git \
   && compass compile 
   
 # install revealjs
-RUN git clone https://github.com/hakimel/reveal.js.git \
+RUN git clone https://github.com/engelben/reveal.js.git \
   && cd reveal.js \
   && npm i
 
