@@ -102,6 +102,12 @@ RUN cd /opt \
   && npm i \
   && compass compile 
 
+ENV TZ=Europe/Berlin
+RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    tzdata \
+    && dpkg-reconfigure --frontend noninteractive tzdata
+
 WORKDIR /documents
 VOLUME /documents
 
