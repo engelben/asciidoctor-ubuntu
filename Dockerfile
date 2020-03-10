@@ -12,7 +12,7 @@ ARG asciidoctor_bibtex=0.7.1
 ENV ASCIIDOCTOR_VERSION=${asciidoctor_version} \
   ASCIIDOCTOR_PDF_VERSION=${asciidoctor_pdf_version} \
   ASCIIDOCTOR_DIAGRAM_VERSION=${asciidoctor_diagram_version} \
-  ASCIIDOCTOR_MATHEMATICAL_VERSION=${asciidoctor_mathematical_version}
+  ASCIIDOCTOR_MATHEMATICAL_VERSION=${asciidoctor_mathematical_version} \
   ASCIIDOCTOR_BIBTEX_VERSION=${asciidoctor_bibtex}
 
 RUN apt-get update && apt-get upgrade -y 
