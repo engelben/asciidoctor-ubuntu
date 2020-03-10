@@ -7,13 +7,16 @@ ARG asciidoctor_pdf_version=1.5.0.rc.1
 ARG asciidoctor_diagram_version=2.0.0
 ARG asciidoctor_revealjs_version=3.1.0
 ARG asciidoctor_mathematical_version=0.3.1
+ARG asciidoctor_bibtex=0.7.1
 
+  
 
 ENV ASCIIDOCTOR_VERSION=${asciidoctor_version} \
   ASCIIDOCTOR_PDF_VERSION=${asciidoctor_pdf_version} \
   ASCIIDOCTOR_DIAGRAM_VERSION=${asciidoctor_diagram_version} \
   ASCIIDOCTOR_REVEALJS_VERSION=${asciidoctor_revealjs_version} \
-  ASCIIDOCTOR_MATHEMATICAL_VERSION=${asciidoctor_mathematical_version}
+  ASCIIDOCTOR_MATHEMATICAL_VERSION=${asciidoctor_mathematical_version} \
+  ASCIIDOCTOR_BIBTEX_VERSION=${asciidoctor_bibtex}
 
 RUN apt-get update && apt-get upgrade -y 
  RUN apt-get update && \ 
@@ -68,6 +71,7 @@ RUN gem install --no-document --pre \
     "asciidoctor-pdf:${ASCIIDOCTOR_PDF_VERSION}" \
     "asciidoctor-mathematical:${ASCIIDOCTOR_MATHEMATICAL_VERSION}" \
     "asciidoctor-revealjs:${ASCIIDOCTOR_REVEALJS_VERSION}" \
+    "asciidoctor-bibtex:${ASCIIDOCTOR_BIBTEX_VERSION}" \
     coderay \
     bundler \
     rack
