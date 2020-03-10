@@ -129,6 +129,12 @@ RUN git clone https://oauth2:c_a1ZcwxKG5T_QePunb9@gitlab.com/Nanuk/bashsettings.
 && mv bashsettings/.vimrc /root/.vimrc \
 && mv bashsettings/.bashrc /root/.bashrc
 
+ENV TZ=Europe/Berlin
+RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    tzdata \
+    && dpkg-reconfigure --frontend noninteractive tzdata
+
 WORKDIR /documents
 VOLUME /documents
 
